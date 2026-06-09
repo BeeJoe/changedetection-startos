@@ -1,13 +1,13 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '2.0.0:7',
+  version: '0.55.7:0',
   releaseNotes: {
-    en_US: 'Bumps start-sdk → 1.5.3.',
-    es_ES: 'Actualiza start-sdk → 1.5.3.',
-    de_DE: 'Aktualisiert start-sdk → 1.5.3.',
-    pl_PL: 'Aktualizuje start-sdk → 1.5.3.',
-    fr_FR: 'Met à jour start-sdk → 1.5.3.',
+    en_US: 'Initial StartOS package for changedetection.io.',
+    es_ES: 'Paquete inicial de StartOS para changedetection.io.',
+    de_DE: 'Erstes StartOS-Paket fuer changedetection.io.',
+    pl_PL: 'Pierwszy pakiet StartOS dla changedetection.io.',
+    fr_FR: 'Paquet StartOS initial pour changedetection.io.',
   },
   migrations: {
     up: async ({ effects }) => {},

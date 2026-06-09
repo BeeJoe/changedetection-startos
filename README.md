@@ -1,16 +1,16 @@
 <p align="center">
-  <img src="icon.svg" alt="Hello World Logo" width="21%">
+  <img src="icon.svg" alt="changedetection.io Logo" width="21%">
 </p>
 
-# Hello World on StartOS
+# changedetection.io on StartOS
 
-> **Upstream repo:** <https://github.com/Start9Labs/hello-world>
+> **Upstream docs:** <https://github.com/dgtlmoon/changedetection.io>
+>
+> Everything not listed in this document should behave the same as upstream
+> changedetection.io. If a feature, setting, or behavior is not mentioned here,
+> the upstream documentation is accurate and fully applicable.
 
-A minimal reference service for StartOS. It displays a simple web page — nothing more. Use [this repository](https://github.com/Start9Labs/hello-world-startos) as a template when packaging a new service for StartOS.
-
-## Getting Started
-
-To learn how to use this template to create your own StartOS service package, see the [Packaging Guide](https://docs.start9.com/packaging).
+changedetection.io monitors web pages, JSON APIs, and documents for changes, then sends alerts through its upstream notification integrations.
 
 ---
 
@@ -27,45 +27,51 @@ To learn how to use this template to create your own StartOS service package, se
 - [Dependencies](#dependencies)
 - [Limitations and Differences](#limitations-and-differences)
 - [What Is Unchanged from Upstream](#what-is-unchanged-from-upstream)
+- [Contributing](#contributing)
 - [Quick Reference for AI Consumers](#quick-reference-for-ai-consumers)
 
 ---
 
 ## Image and Container Runtime
 
-| Property      | Value                                  |
-| ------------- | -------------------------------------- |
-| Image         | `ghcr.io/start9labs/hello-world`       |
-| Architectures | x86_64, aarch64, riscv64               |
-| Command       | `hello-world`                          |
+| Property      | Value                                                 |
+| ------------- | ----------------------------------------------------- |
+| Image         | LinuxServer `lscr.io/linuxserver/changedetection.io` image |
+| Architectures | x86_64, aarch64                                      |
+| Entrypoint    | Upstream image entrypoint and default command via SDK |
+| Managed env   | User ID, group ID, timezone, and version-check behavior |
 
 ---
 
 ## Volume and Data Layout
 
-| Volume | Mount Point | Purpose         |
-| ------ | ----------- | --------------- |
-| `main` | `/data`     | Persistent data |
+| Volume | Mount Point  | Purpose                                                     |
+| ------ | ------------ | ----------------------------------------------------------- |
+| `main` | `/config` | Watch list, history, screenshots, app settings, and imports |
 
 ---
 
 ## Installation and First-Run Flow
 
-No special setup. Install and start — the web page is immediately available.
+Install and start the service, then open the **Web UI** interface from the StartOS dashboard.
+
+The upstream app starts with its standard first-run behavior. Configure application-level access control, watch defaults, notifications, and any API keys inside the changedetection.io web UI.
 
 ---
 
 ## Configuration Management
 
-No configurable settings. The service runs with no user-facing configuration.
+| StartOS-Managed                           | Upstream-Managed                                                 |
+| ----------------------------------------- | ---------------------------------------------------------------- |
+| Container image, daemon, port, volume, user/group IDs, timezone, and version-check behavior | Watches, notification URLs, app password, proxy settings, API keys, import/export, and UI settings |
 
 ---
 
 ## Network Access and Interfaces
 
-| Interface | Port | Protocol | Purpose              |
-| --------- | ---- | -------- | -------------------- |
-| Web UI    | 80   | HTTP     | Hello World web page |
+| Interface | Port | Protocol | Purpose                                |
+| --------- | ---- | -------- | -------------------------------------- |
+| Web UI    | 5000 | HTTP     | changedetection.io web interface and API |
 
 **Access methods:**
 
@@ -78,7 +84,7 @@ No configurable settings. The service runs with no user-facing configuration.
 
 ## Actions (StartOS UI)
 
-None.
+None. All user-facing actions are handled in the upstream web UI.
 
 ---
 
@@ -86,7 +92,7 @@ None.
 
 **Included in backup:**
 
-- `main` volume
+- `main` volume, including watch data, history, screenshots, settings, and imports stored by the upstream app
 
 **Restore behavior:** Volume is fully restored before the service starts.
 
@@ -94,9 +100,9 @@ None.
 
 ## Health Checks
 
-| Check         | Method              | Messages                                                           |
-| ------------- | ------------------- | ------------------------------------------------------------------ |
-| Web Interface | Port listening (80) | Success: "The web interface is ready" / Error: "The web interface is not ready" |
+| Check         | Method         | Messages                                                           |
+| ------------- | -------------- | ------------------------------------------------------------------ |
+| Web Interface | Port listening | Success: "The web interface is ready" / Error: "The web interface is not ready" |
 
 ---
 
@@ -108,27 +114,41 @@ None.
 
 ## Limitations and Differences
 
-1. **No meaningful functionality** — this is a reference/template package only
+1. **LinuxServer container wrapper** - the package uses LinuxServer's changedetection.io image because it includes the Playwright content fetcher and supports the StartOS target architectures. The application itself remains changedetection.io.
+2. **No StartOS configuration form** - watches, notification URLs, proxy settings, API keys, and app security settings are managed in changedetection.io itself.
+3. **External browser drivers are not managed by StartOS** - the bundled Playwright fetcher is available, but any separate WebDriver or remote Playwright service must be configured manually in changedetection.io.
+4. **Notification delivery depends on network reachability** - outbound notification integrations must be reachable from the StartOS device.
+5. **Website monitoring responsibility remains with the user** - users are responsible for complying with site terms, robots policies, and applicable law when monitoring remote content.
 
 ---
 
 ## What Is Unchanged from Upstream
 
-The service is identical to upstream. There are no modifications.
+The package runs a prebuilt changedetection.io container image without rebuilding it. Core watch management, HTML/text/JSON/PDF monitoring, Playwright-backed fetching, filters, history, import/export, API, and notification integrations behave as documented upstream unless limited above.
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for local checks and build commands.
 
 ---
 
 ## Quick Reference for AI Consumers
 
 ```yaml
-package_id: hello-world
-image: ghcr.io/start9labs/hello-world
-architectures: [x86_64, aarch64, riscv64]
+package_id: changedetection
+image: lscr.io/linuxserver/changedetection.io
+architectures: [x86_64, aarch64]
 volumes:
-  main: /data
+  main: /config
 ports:
-  ui: 80
+  ui: 5000
 dependencies: none
-startos_managed_env_vars: none
+startos_managed_env_vars:
+  - PUID
+  - PGID
+  - TZ
+  - DISABLE_VERSION_CHECK
 actions: none
 ```

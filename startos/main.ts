@@ -3,33 +3,30 @@ import { sdk } from './sdk'
 import { uiPort } from './utils'
 
 export const main = sdk.setupMain(async ({ effects }) => {
-  /**
-   * ======================== Setup (optional) ========================
-   *
-   * In this section, we fetch any resources or run any desired preliminary commands.
-   */
-  console.info(i18n('Starting Hello World!'))
+  console.info(i18n('Starting changedetection.io'))
 
-  /**
-   * ======================== Daemons ========================
-   *
-   * In this section, we create one or more daemons that define the service runtime.
-   *
-   * Each daemon defines its own health check, which can optionally be exposed to the user.
-   */
   return sdk.Daemons.of(effects).addDaemon('primary', {
     subcontainer: await sdk.SubContainer.of(
       effects,
-      { imageId: 'hello-world' },
+      { imageId: 'main' },
       sdk.Mounts.of().mountVolume({
         volumeId: 'main',
         subpath: null,
-        mountpoint: '/data',
+        mountpoint: '/config',
         readonly: false,
       }),
-      'hello-world-sub',
+      'changedetection-sub',
     ),
-    exec: { command: ['hello-world'] },
+    exec: {
+      command: sdk.useEntrypoint(),
+      runAsInit: true,
+      env: {
+        PUID: '1000',
+        PGID: '1000',
+        TZ: 'Etc/UTC',
+        DISABLE_VERSION_CHECK: 'true',
+      },
+    },
     ready: {
       display: i18n('Web Interface'),
       fn: () =>
