@@ -6,13 +6,13 @@ export const current = VersionInfo.of({
     en_US:
       'Updates the LinuxServer image and capitalizes the StartOS display name.',
     es_ES:
-      'Actualiza la imagen de LinuxServer y pone en mayusculas el nombre mostrado en StartOS.',
+      'Actualiza la imagen de LinuxServer y pone en mayúsculas el nombre mostrado en StartOS.',
     de_DE:
-      'Aktualisiert das LinuxServer-Image und schreibt den StartOS-Anzeigenamen gross.',
+      'Aktualisiert das LinuxServer-Image und schreibt den StartOS-Anzeigenamen groß.',
     pl_PL:
-      'Aktualizuje obraz LinuxServer i kapitalizuje nazwe wyswietlana w StartOS.',
+      'Aktualizuje obraz LinuxServer i kapitalizuje nazwę wyświetlaną w StartOS.',
     fr_FR:
-      "Met a jour l'image LinuxServer et met en majuscule le nom affiche dans StartOS.",
+      "Met à jour l'image LinuxServer et met en majuscule le nom affiché dans StartOS.",
   },
   migrations: {
     up: async ({ effects }) => {},

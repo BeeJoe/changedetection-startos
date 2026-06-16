@@ -4,11 +4,11 @@ import { long, short } from './i18n'
 export const manifest = setupManifest({
   id: 'changedetection',
   title: 'ChangeDetection.io',
-  license: 'GPL-3.0',
-  packageRepo: 'https://github.com/BeeJoe/changedetection-startos',
+  license: 'Apache-2.0',
+  packageRepo: 'https://github.com/Start9-Community/changedetection-startos',
   upstreamRepo: 'https://github.com/dgtlmoon/changedetection.io',
   marketingUrl: 'https://changedetection.io/',
-  donationUrl: null,
+  donationUrl: 'https://github.com/sponsors/dgtlmoon',
   description: { short, long },
   volumes: ['main'],
   images: {
