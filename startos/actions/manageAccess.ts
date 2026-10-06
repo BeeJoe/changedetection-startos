@@ -11,7 +11,7 @@ export const inputSpec = InputSpec.of({
   access: Value.union({
     name: i18n('Access'),
     description: i18n(
-      'Choose who can use your changedetection.io instance. Public: anyone with the address can use it. Private: require a password to log in.',
+      '- Public: anyone who can reach the address can use the web UI.\n- Private (require login): the web UI asks for a password before it can be used.',
     ),
     default: 'public',
     variants: Variants.of({
@@ -22,7 +22,7 @@ export const inputSpec = InputSpec.of({
           password: Value.text({
             name: i18n('Password'),
             description: i18n(
-              'The password for logging in to the web UI. Use the generate button for a strong random password, or type your own.',
+              'Saving replaces any previous password. Only a hash of it is kept, so it is shown once after saving and cannot be retrieved later.',
             ),
             required: true,
             masked: true,
@@ -80,15 +80,16 @@ export const manageAccess = sdk.Action.withInput(
       })
       return {
         version: '1',
-        title: 'Login Required',
-        message:
+        title: i18n('Login Required'),
+        message: i18n(
           'Your changedetection.io now requires this password to access the web UI. Log in at the app screen with the password below.',
+        ),
         result: {
           type: 'group',
           value: [
             {
               type: 'single',
-              name: 'Password',
+              name: i18n('Password'),
               description: null,
               value: password,
               masked: true,
@@ -103,9 +104,10 @@ export const manageAccess = sdk.Action.withInput(
     await storeJson.merge(effects, { uiPasswordHash: undefined })
     return {
       version: '1',
-      title: 'Now Open',
-      message:
+      title: i18n('Now Open'),
+      message: i18n(
         'Your changedetection.io web UI is now open — anyone with the address can use it.',
+      ),
       result: null,
     }
   },

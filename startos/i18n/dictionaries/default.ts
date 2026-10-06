@@ -15,11 +15,15 @@ const dict = {
   'Manage Access': 6,
   'Require a password to access the changedetection.io web UI, or keep it open to anyone with the address.': 7,
   Access: 8,
-  'Choose who can use your changedetection.io instance. Public: anyone with the address can use it. Private: require a password to log in.': 9,
+  '- Public: anyone who can reach the address can use the web UI.\n- Private (require login): the web UI asks for a password before it can be used.': 9,
   Public: 10,
   'Private (require login)': 11,
   Password: 12,
-  'The password for logging in to the web UI. Use the generate button for a strong random password, or type your own.': 13,
+  'Saving replaces any previous password. Only a hash of it is kept, so it is shown once after saving and cannot be retrieved later.': 13,
+  'Login Required': 14,
+  'Your changedetection.io now requires this password to access the web UI. Log in at the app screen with the password below.': 15,
+  'Now Open': 16,
+  'Your changedetection.io web UI is now open — anyone with the address can use it.': 17,
 } as const
 
 /**
