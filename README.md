@@ -69,7 +69,7 @@ One model, and what it does **not** hold is the point.
 | ------------ | ------ | ----------------------- | ------------------------ |
 | `store.json` | JSON   | Yes — `FileHelper.json` | The Manage Access action |
 
-It holds exactly one field: a **salted PBKDF2 hash** of the web password. The plaintext is never written anywhere — it is shown once in the action's result and then exists only wherever the user saved it.
+It models one field: a **salted PBKDF2 hash** of the web password. Unrecognized fields are preserved when access settings change. The plaintext is never written anywhere — it is shown once in the action's result and then exists only wherever the user saved it.
 
 The hash is computed to the format the application itself expects, and handed to it as environment. The application reads that variable **ahead of** the password in its own datastore, which is what lets the package control the login without writing into the application's data at all — no editing its settings file, no risk of the two disagreeing.
 
@@ -146,6 +146,7 @@ The practical caveat is size: snapshot history is the bulk of the volume and gro
 3. **The password is StartOS's, not the application's own setting.** It is injected as environment and takes precedence over anything set inside the app, so changing it there will not have the effect the user expects.
 4. **The upstream version check is disabled**, so the application will not tell you a newer release exists — updates come through StartOS.
 5. **Watch traffic originates from the server**, and there is no package-level proxy setting; configure one inside the application if it matters.
+6. **Browser-backed watches need an external browser service.** The image includes the Playwright client, but this package provides no browser companion container or driver endpoint. Configure an external browser connection in the application's browser settings before using browser-backed fetching.
 
 ---
 

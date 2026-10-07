@@ -11,7 +11,7 @@ You've installed ChangeDetection.io, a web page and API change monitoring servic
 
 - **A persistent ChangeDetection.io instance** with its datastore backed up by StartOS.
 - **A web UI and API** exposed through the service's **Web UI** interface.
-- **Bundled Playwright content fetching** from the LinuxServer container image for browser-backed watches.
+- **Playwright client support** from the LinuxServer container image; browser-backed watches require an external browser service.
 - **Upstream notification integrations** configured inside changedetection.io.
 - **Optional login** — require a password for the web UI via the **Manage Access** action (off by default).
 
@@ -21,6 +21,8 @@ You've installed ChangeDetection.io, a web page and API change monitoring servic
 2. Click the **Web UI** interface.
 3. Add a watch URL, choose the content filters you need, and run a manual recheck to confirm the first snapshot.
 4. Configure notification settings in changedetection.io.
+
+Use groups to organize watches. If you use AI change summaries, configure the provider in changedetection.io; prompts can be customized per watch or group.
 
 ## Requiring a login
 
@@ -38,7 +40,7 @@ StartOS backs up the changedetection.io datastore. This includes watches, histor
 
 ## Limitations
 
-- The package does not manage separate WebDriver, remote Playwright, or sockpuppetbrowser companion containers. The bundled Playwright fetcher is available for browser-backed watches.
+- The package does not manage separate WebDriver, remote Playwright, or sockpuppetbrowser companion containers. To use browser-backed watches, configure an external browser connection in changedetection.io's browser settings.
 - Most changedetection.io settings are managed in the web UI; the web UI login password is the exception (set it via the **Manage Access** action).
 - Notification integrations must be reachable from your StartOS device.
 - You are responsible for complying with the terms, robots policies, and laws that apply to the sites you monitor.
