@@ -4,7 +4,7 @@ import { sdk } from '../sdk'
 // Stores only changedetection.io's salted PBKDF2 hash — never plaintext.
 // Read reactively in main.ts so setting or clearing it (via the "Manage
 // Access" action) restarts the service to apply the new SALTED_PASS.
-const shape = z.object({
+const shape = z.looseObject({
   uiPasswordHash: z.string().optional().catch(undefined),
 })
 

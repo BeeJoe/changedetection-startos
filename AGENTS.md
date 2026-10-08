@@ -18,13 +18,21 @@ Freshly scaffolded? Work the
 guide page, not a file in this repo — read it, don't copy it in.
 
 Keep `README.md` (technical reference for an AI support or administering agent) and
-`instructions.md` (end-user docs) in sync with your changes.
+`instructions.md` (end-user docs) in sync with your changes. This file restates neither:
+whoever changes the package has both, so it carries only what they don't — repo mechanics,
+a change that looks right and is not, where the next thing gets added, a naming trap, a
+build or test invocation particular to this repo.
 
-**Bugs and feature requests are GitHub issues on this repo** — file them as you find them.
+**Fix a defect you spot rather than reporting it** — you have the package open and the
+context to be sure. File **a GitHub issue on this repo** only when the call isn't yours to
+make: you can't pin the cause down, two defensible fixes exist, or it's too large to ride on
+the work in hand. An open issue is a report, not a queue — implement one when you're asked
+to or when it's labelled `Approved`, then close it with `Closes #<n>`.
+
 Don't record work in the repo instead: no `TODO.md`, no `NOTES.md`, no `PLAN.md`. What you
 verified, tried, and decided belongs in the commit message and the PR body.
 
 ## This repo
 
-- **`runAsInit: true` is load-bearing.** The base is a LinuxServer s6-overlay image and needs PID 1.
-- **`SALTED_PASS` is read by the app ahead of its own datastore password**, which is what lets the package own the login without writing into the app's data. Don't "fix" this by editing the app's settings file instead — the two would then disagree.
+- **Keep `runAsInit: true`.** The base is a LinuxServer s6-overlay image, which must be PID 1.
+- **Set the login only through `SALTED_PASS`, never by editing the app's settings file.** The app reads `SALTED_PASS` ahead of its datastore password, so the two would disagree.
